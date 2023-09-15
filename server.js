@@ -27,7 +27,7 @@ connect()
 
 app.use(cors({
     credentials: true,
-    origin: 'https://auction-v1test.vercel.app/'
+    origin: 'https://auction-v1test.vercel.app'
 }))
 
 // middlewares
