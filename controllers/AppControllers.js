@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
-const Property = require('../models/propertyModel')
+const {Property, Bookmarks} = require('../models/propertyModel')
+
 const downloadImage = require('../public/imageDownloader')
 const fs = require('fs')
 
@@ -109,6 +110,35 @@ const getProperties = async (req, res) => {
         res.status(400).json({error})
     }
 }
+
+
+const getBookmarks = async (req, res) => {
+    const {_id} = req.user
+
+    try{
+        const bookmarks = await Bookmarks.find({userId: _id})
+        res.status(200).json(bookmarks)
+    }catch(error){
+        res.status(400).json(error)
+    }
+}
+
+const addToBookmark = async (req, res) => {
+    const user_id = req.user._id
+    const {property_id} = req.body
+
+
+    try {
+           
+        // const ver = await Bookmarks.find({_id: property_id})
+        
+        const newBookmark = await Bookmarks.create({userId: user_id, propertyId: property_id})
+        res.status(200).json(newBookmark)
+        
+    }catch(error) {
+        res.status(400).json({error})
+    }
+}
 module.exports = {
     allProperties,
     user,
@@ -117,5 +147,7 @@ module.exports = {
     postProperty,
     getProperties,
     getSingleProperties,
-    sellerProfile
+    sellerProfile,
+    addToBookmark,
+    getBookmarks
 }

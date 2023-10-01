@@ -32,6 +32,7 @@ const userSchema =  new Schema({
         type: Boolean,
     
     }
+    
 
 }, {timestamps: true})
 

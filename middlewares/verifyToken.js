@@ -13,7 +13,6 @@ const verifyToken = async (req, res, next) => {
         const {id} = jwt.verify(token, process.env.JWT_SECRET)
         console.log(id)
         req.user = await User.findOne({_id: id}).select('_id')
-        console.log(req.user)
         next()
         
     }catch (err) {

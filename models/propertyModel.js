@@ -49,4 +49,20 @@ const propertySchema =  new Schema({
 }, {timestamps: true})
 
 
-module.exports = mongoose.model('property', propertySchema)
+const BookMarkSchema = new Schema({
+    userId: {
+        type: String
+    },
+    propertyId: {
+        type: String
+    }
+}, {timestamps: true})
+
+
+const Bookmarks = mongoose.model('bookmark', BookMarkSchema)
+const Property = mongoose.model('property', propertySchema)
+
+module.exports = {
+    Bookmarks,
+    Property
+}

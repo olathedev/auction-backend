@@ -61,8 +61,7 @@ const signin = async (req, res) => {
 
         res.cookie('jwt', token, {
             httpOnly: true,
-            secured: process.env.JWT_SECRET !== 'development',
-            sameSite: 'strict',
+            secured: process.env.NODE_ENV !== 'development',
             maxAge: 30 * 24 * 60 * 60 * 1000
         })
         

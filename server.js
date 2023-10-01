@@ -27,7 +27,7 @@ connect()
 
 app.use(cors({
     credentials: true,
-    origin: 'https://auction-v1test.vercel.app'
+    origin: process.env.NODE_ENV === "development" ? "http://localhost:5173" : 'https://auction-v1test.vercel.app'
 }))
 
 // middlewares

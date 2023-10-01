@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { user, uploadImageByLink, uploadFromDevice, postProperty, getProperties, allProperties, getSingleProperties, sellerProfile } = require('../controllers/AppControllers')
+const { user, uploadImageByLink, uploadFromDevice, postProperty, getProperties, allProperties, getSingleProperties, sellerProfile, addToBookmark, getBookmarks } = require('../controllers/AppControllers')
 const verifytoken = require('../middlewares/verifyToken')
 const multer = require('multer')
 
@@ -21,7 +21,10 @@ router.get('/property', getProperties)
 router.post('/upload-by-link', uploadImageByLink)
 router.post('/upload-from-device', upload.array('images', 50), uploadFromDevice)
 
-// 
+// bookmar
+router.get('/bookmark', getBookmarks)
+router.post('/bookmark', addToBookmark)
+
 
 
 module.exports = router
