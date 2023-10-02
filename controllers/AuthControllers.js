@@ -36,12 +36,11 @@ const verifyEmail = async (req, res) => {
     try {
         const verify = await User.verifyEmail(code)
         const user = await User.findOneAndUpdate({_id: verify._id}, {$set: {isVerified: true, verification: null}})
-        const token = generateToken(user._id)
+        const token = await generateToken(user._id)
         
         res.cookie('jwt', token, {
             httpOnly: true,
             secured: process.env.NODE_ENV !== 'development',
-        
             maxAge: 30 * 24 * 60 * 60 * 1000
         })
 
@@ -57,7 +56,7 @@ const signin = async (req, res) => {
 
     try{
         const user = await User.login(email, password)
-        const token = generateToken(user._id)
+        const token = await generateToken(user._id)
 
         res.cookie('jwt', token, {
             httpOnly: true,
