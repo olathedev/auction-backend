@@ -38,11 +38,7 @@ const verifyEmail = async (req, res) => {
         const user = await User.findOneAndUpdate({_id: verify._id}, {$set: {isVerified: true, verification: null}})
         const token = generateToken(user._id)
         
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== 'development',
-            maxAge: 30 * 24 * 60 * 60 * 1000
-        })
+        
         
         res.status(200).json(user)
 
@@ -57,15 +53,8 @@ const signin = async (req, res) => {
     try{
         const user = await User.login(email, password)
         const token = generateToken(user._id)
-
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== 'development',
-            sameSite: 'strict',
-            maxAge: 30 * 24 * 60 * 60 * 1000
-        })
         
-        res.status(200).json({user})
+        res.status(200).json({user, token})
 
     }catch(error){
         res.status(400).json({error: error.message})

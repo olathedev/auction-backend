@@ -3,11 +3,13 @@ const User = require('../models/userModel')
 
 
 const verifyToken = async (req, res, next) => {
-    const token = req.cookies.jwt
+    const {authorisation} = req.headers
 
-    if(!token) {
+    if(!authorisation) {
        return res.status(400).json({error: 'youre not logged in mate'})
     }
+
+    const token = authorisation.split(' ')[1]
 
     try {
         const {id} = jwt.verify(token, process.env.JWT_SECRET)
